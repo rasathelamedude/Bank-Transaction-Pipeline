@@ -1,0 +1,18 @@
+{
+  "name": "with-kafka",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "scripts": {
+    "producer": "bun run producer/index.ts",
+    "balance-updater": "bun run balance-updater/index.ts",
+    "notifier": "bun run notifier/index.ts",
+    "audit-logger": "bun run audit-logger/index.ts"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  }
+}
