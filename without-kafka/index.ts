@@ -5,7 +5,7 @@
  *  bun run index.ts
  *
  * Observe the output and you can conclude that:
- *    - 7 transactions took ~31 seconds to process.
+ *    - 6 transactions took ~11 seconds to process.
  *    - Each transaction waits for the previous one to complete before starting.
  *    - If one service crashes or is slow, the whole system will be affected.
  *    - Alice's payment to bob is blocked by charlie's transaction even though they have nothing to do with each other.
@@ -15,7 +15,6 @@
  *
  * Real banks process millions of transactions per day.
  * At this rate this is practiclly impossible.
- *
  *
  * This is one case where a Message Broker like Kafka shines.
  * The producer drops the even and moves on.
@@ -43,7 +42,11 @@ function sleep(ms: number): Promise<void> {
 }
 
 // 1. Define a transaction object
-async function sendTransaction(from: string, to: string, amount: number) {
+async function sendTransaction(
+  from: string,
+  to: string,
+  amount: number,
+): Promise<void> {
   const transaction: Transaction = {
     transactionId: generateTransactionId(),
     from,
@@ -56,12 +59,12 @@ async function sendTransaction(from: string, to: string, amount: number) {
   await checkFraud(transaction);
   await updateUserBalance(transaction);
   await notifyUser(transaction);
-  logTransaction(transaction);
+  await logTransaction(transaction);
 }
 
 // 2. Check for fraudulent activity
 async function checkFraud(transaction: Transaction): Promise<void> {
-  await sleep(3000); // Simulate time taken for fraud check
+  await sleep(600); // Simulate time taken for fraud check
 
   if (transaction.amount > 10000) {
     console.warn(
@@ -82,7 +85,7 @@ async function checkFraud(transaction: Transaction): Promise<void> {
 
 // 3. Update the balance of the user
 async function updateUserBalance(transaction: Transaction) {
-  await sleep(1000); // Simulate time taken to update balance
+  await sleep(500); // Simulate time taken to update balance
   console.log(
     `Updating balance for ${transaction.from} and ${transaction.to}...`,
   );
@@ -95,7 +98,8 @@ async function notifyUser(transaction: Transaction) {
 }
 
 // 5. Log the transaction for auditing purposes
-function logTransaction(transaction: Transaction) {
+async function logTransaction(transaction: Transaction) {
+  await sleep(100);
   console.log(
     `Logging transaction ${transaction.transactionId} for auditing purposes...`,
   );

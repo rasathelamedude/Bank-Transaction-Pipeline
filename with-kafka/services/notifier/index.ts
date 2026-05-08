@@ -1,0 +1,1 @@
+console.log('Notifier Service is running...');

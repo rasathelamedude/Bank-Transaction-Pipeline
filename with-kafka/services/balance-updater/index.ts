@@ -1,0 +1,1 @@
+console.log("Balance Updater Service is running...");

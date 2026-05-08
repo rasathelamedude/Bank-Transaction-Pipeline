@@ -1,2 +1,37 @@
+---
+version: "3"
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    ports:
+      - "22181:2181"
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - kafka
+  kafka:
+    image: confluentinc/cp-kafka:7.4.4
+    depends_on: [ zookeeper ]
+    ports:
+      - "29092:29092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092 # one is for inter container communication, the other is for the bun scripts running outside docker
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1 # Replication factor is how mnay copies of a message are kept across brokers. It can't be more than the number of brokers we have, if we have 1 broker and we set replication factor to 3, kafka would give an error trying to look for two more brokers to store the message.
+    networks:
+      - kafka
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis-data:/data
+    networks:
+      - kafka
 
-
+networks:
+  kafka:
+    driver: bridge
