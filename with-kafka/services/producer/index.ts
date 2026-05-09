@@ -20,7 +20,7 @@ const kafkaClient: Kafka = new Kafka({
 // Create producer
 const producer = kafkaClient.producer();
 
-// Connect producer
+// Connect producer and publish transactions
 const publishTransactions = async () => {
   await producer.connect();
 
@@ -33,6 +33,8 @@ const publishTransactions = async () => {
   });
 
   await producer.disconnect();
+
+  console.log("Transactions published successfully");
 };
 
 publishTransactions().catch(console.error);
