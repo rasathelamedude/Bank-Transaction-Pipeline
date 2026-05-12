@@ -16,6 +16,7 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "ioredis": "^5.10.1",
     "kafkajs": "^2.2.4"
   }
 }

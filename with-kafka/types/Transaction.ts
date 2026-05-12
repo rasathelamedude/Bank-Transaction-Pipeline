@@ -1,15 +1,15 @@
-export class KafkaMessage {
+export class Transaction {
   transactionId: string;
-  from: string;
-  to: string;
+  senderAccountId: string;
+  recieverAccountId: string;
   amount: number;
   currency: string;
   timestamp: Date;
 
-  constructor(from: string, to: string, amount: number) {
+  constructor(senderId: string, recieverId: string, amount: number) {
     this.transactionId = this.generateTransactionId();
-    this.from = from;
-    this.to = to;
+    this.senderAccountId = senderId;
+    this.recieverAccountId = recieverId;
     this.amount = amount;
     this.currency = "USD";
     this.timestamp = new Date();

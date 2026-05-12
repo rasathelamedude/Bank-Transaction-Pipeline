@@ -1,14 +1,13 @@
 import { Kafka } from "kafkajs";
-import { KafkaMessage } from "./KafkaMessage";
+import { Transaction } from "../../types/Transaction";
 
-// Connect producer
-const transactions: KafkaMessage[] = [
-  new KafkaMessage("Alice", "Bob", 5000),
-  new KafkaMessage("Ahmed", "Muhammad", 4000),
-  new KafkaMessage("Charlie", "Charlie", 2000),
-  new KafkaMessage("Alice", "Bob", 8000),
-  new KafkaMessage("Alice", "Bob", 8000),
-  new KafkaMessage("Alice", "Bob", 8000),
+const transactions: Transaction[] = [
+  new Transaction("Alice", "Bob", 5000),
+  new Transaction("Ahmed", "Muhammad", 4000),
+  new Transaction("Charlie", "Charlie", 2000),
+  new Transaction("Alice", "Bob", 8000),
+  new Transaction("Alice", "Bob", 8000),
+  new Transaction("Alice", "Bob", 8000),
 ];
 
 // Create new kafka client
