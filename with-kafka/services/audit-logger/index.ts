@@ -22,9 +22,7 @@ const runConsumer = async () => {
 
         const transaction: Transaction = JSON.parse(value);
 
-        console.log(
-          `[AUDIT] Auditing transaction ${transaction.transactionId}...`,
-        );
+        console.log(`Auditing transaction ${transaction.transactionId}...`);
         await appendAudit(transaction);
       } catch (error) {
         console.log(`Error processing transaction: ${error}`);

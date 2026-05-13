@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start:without-kafka": "bun run without-kafka/index.ts"
+    "without-kafka": "cd without-kafka && bun run index.ts",
+    "with-kafka": "cd with-kafka && bun run index.ts"
   },
   "repository": {
     "type": "git",

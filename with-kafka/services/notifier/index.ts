@@ -22,7 +22,7 @@ const runConsumer = async () => {
         const transaction: Transaction = JSON.parse(value);
 
         console.log(
-          `[NOTIFIER] Transaction ${transaction.transactionId} | ${transaction.senderAccountId} -> ${transaction.receiverAccountId} | $${transaction.amount} USD | Status: Delivered`,
+          `Transaction ${transaction.transactionId} | ${transaction.senderAccountId} -> ${transaction.receiverAccountId} | $${transaction.amount} USD | Status: Delivered`,
         );
       } catch (error) {
         console.log(`Error processing transaction: ${error}`);
