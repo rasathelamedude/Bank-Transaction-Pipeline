@@ -1,4 +1,5 @@
 import { Redis } from "ioredis";
+import { Transaction } from "../types/Transaction";
 
 const redis = new Redis({
   host: "localhost",
@@ -30,4 +31,19 @@ export async function updateBalance(
   amount: number,
 ): Promise<void> {
   await redis.incrby(`balance:${accountId}`, amount);
+}
+
+// audit:log -> [{...}, {...}, {...}]
+export async function appendAudit(transaction: Transaction) {
+  const entry = {
+    ...transaction,
+    loggedAt: new Date().toISOString(),
+  };
+
+  await redis.rpush(`audit:log`, JSON.stringify(entry));
+}
+
+export async function getAuditLog(): Promise<string[]> {
+  const auditLog: string[] = await redis.lrange(`audit:log`, 0, -1);
+  return auditLog;
 }

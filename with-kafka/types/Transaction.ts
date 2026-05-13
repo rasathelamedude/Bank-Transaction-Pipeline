@@ -1,7 +1,7 @@
 export class Transaction {
   transactionId: string;
   senderAccountId: string;
-  recieverAccountId: string;
+  receiverAccountId: string;
   amount: number;
   currency: string;
   timestamp: Date;
@@ -9,7 +9,7 @@ export class Transaction {
   constructor(senderId: string, recieverId: string, amount: number) {
     this.transactionId = this.generateTransactionId();
     this.senderAccountId = senderId;
-    this.recieverAccountId = recieverId;
+    this.receiverAccountId = recieverId;
     this.amount = amount;
     this.currency = "USD";
     this.timestamp = new Date();

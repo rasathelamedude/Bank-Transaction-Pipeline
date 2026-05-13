@@ -1,6 +1,6 @@
 import { getBalance, setBalance, updateBalance } from "../../utils/redisClient";
 import { Kafka } from "kafkajs";
-import { Transaction } from "../../types/Transaction";
+import type { Transaction } from "../../types/Transaction";
 
 // Create Kafka client
 const kafka: Kafka = new Kafka({
@@ -36,10 +36,10 @@ const runConsumer = async () => {
         console.log(`Processing transaction ${transaction.transactionId}...`);
 
         await updateBalance(transaction.senderAccountId, -transaction.amount);
-        await updateBalance(transaction.recieverAccountId, transaction.amount);
+        await updateBalance(transaction.receiverAccountId, transaction.amount);
 
         console.log(
-          `Balance updated: ${transaction.senderAccountId} -${transaction.amount}, ${transaction.recieverAccountId} +${transaction.amount}`,
+          `Balance updated: ${transaction.senderAccountId} -${transaction.amount}, ${transaction.receiverAccountId} +${transaction.amount}`,
         );
       } catch (error) {
         console.log(`Error processing transaction: ${error}`);

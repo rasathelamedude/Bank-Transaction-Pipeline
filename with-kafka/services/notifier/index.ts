@@ -1,5 +1,5 @@
 import { Kafka } from "kafkajs";
-import { Transaction } from "../../types/Transaction";
+import type { Transaction } from "../../types/Transaction";
 
 const kafka = new Kafka({
   clientId: "wireflow-notifier",
@@ -13,7 +13,7 @@ const runConsumer = async () => {
   await consumer.subscribe({ topic: "transactions", fromBeginning: true });
 
   consumer.run({
-    eachMessage: async ({ partition, message, topic }) => {
+    eachMessage: async ({ message }) => {
       try {
         const value = message.value?.toString();
 
@@ -21,7 +21,9 @@ const runConsumer = async () => {
 
         const transaction: Transaction = JSON.parse(value);
 
-        console.log(`Processing transaction ${transaction.transactionId}...`);
+        console.log(
+          `[NOTIFIER] Transaction ${transaction.transactionId} | ${transaction.senderAccountId} -> ${transaction.receiverAccountId} | $${transaction.amount} USD | Status: Delivered`,
+        );
       } catch (error) {
         console.log(`Error processing transaction: ${error}`);
       }
