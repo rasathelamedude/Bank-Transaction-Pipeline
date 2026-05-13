@@ -25,7 +25,7 @@ const runConsumer = async () => {
   await consumer.subscribe({ topic: "transactions", fromBeginning: true });
 
   consumer.run({
-    eachMessage: async ({ partition, message, topic }) => {
+    eachMessage: async ({ message }) => {
       try {
         const value = message.value?.toString();
 
@@ -54,6 +54,7 @@ async function main() {
   await seedBalance("Ahmed", 8000);
   await seedBalance("Muhammad", 3000);
   await seedBalance("Charlie", 2000);
+  await seedBalance("Diana", 1500000);
 
   await runConsumer();
 }

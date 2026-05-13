@@ -8,6 +8,7 @@ const transactions: Transaction[] = [
   new Transaction("Alice", "Bob", 8000),
   new Transaction("Alice", "Bob", 8000),
   new Transaction("Alice", "Bob", 8000),
+  new Transaction("Diana", "Bob", 1000000),
 ];
 
 // Create new kafka client
